@@ -28,7 +28,7 @@ module.exports = {
     {
       uniqueKeys: {
         actions_unique: {
-          fields: ['userId', 'recipeId']
+          fields: ['userId', 'trailId']
         }
       }
     });
