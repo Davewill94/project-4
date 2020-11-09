@@ -23,6 +23,7 @@ This app will alow users to find hiking trails near them or a specified location
 
 ## Post MVP
 - Integrate map that shows the location of the trail.
+- Integrate a curent weather ticker for location of trail.
 - Integrate map that shows the trail path(maybe).
 - Add image uploader for user profile picture.
 - Try to get and use users location to search for trails.
