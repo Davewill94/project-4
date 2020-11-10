@@ -18,6 +18,7 @@ const GetTrails = (req, res) => {
 }
 
 const GetTrail = (req, res) => {
+    console.log("Made Request")
     Trail.findByPk(req.params.index)
     .then(foundTrail => {
         Review.findAll({
@@ -29,6 +30,7 @@ const GetTrail = (req, res) => {
             order: [['createdAt', "DESC"]]
         })
         .then(reviews => {
+            console.log("Finished Request")
             let reviewArray = [...reviews];
             let response = {...foundTrail, reviewArray};
             res.status(200).send(response)

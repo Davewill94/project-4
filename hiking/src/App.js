@@ -5,6 +5,7 @@ import Header from './components/Header';
 import HomePage from './components/HomePage';
 import Login from './components/LogIn';
 import SignUp from './components/SignUp';
+import TrailShow from './components/TrailShow';
 
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
       </Route>
       <Route path="/signup" >
         <SignUp />
+      </Route>
+      <Route path="/gettrail" >
+        <TrailShow />
       </Route>
 
     </div>

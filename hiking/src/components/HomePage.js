@@ -8,6 +8,7 @@ const HomePage = () => {
                 <Link to='/login'>Login</Link>
                 <p>Or</p>
                 <Link to='/signup'>Sign Up</Link>
+                <Link to='/gettrail'>Get One trail</Link>
             </nav>
         </div>
     )
