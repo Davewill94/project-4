@@ -11,6 +11,10 @@ app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.use(express.static('public'));
 
+app.use('/trails', routes.trail);
+app.use('/profiles', routes.profile);
+app.use('/reviews', routes.review);
+
 app.listen(process.env.PORT, () => {
     console.log(`${process.env.PORT}`)
 })

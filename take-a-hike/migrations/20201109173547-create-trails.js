@@ -43,6 +43,9 @@ module.exports = {
       lng: {
         type: Sequelize.FLOAT
       },
+      userId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         defaultValue: new Date(),
