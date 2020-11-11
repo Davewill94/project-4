@@ -20,7 +20,7 @@ const createUser = (req, res) => {
                 const token = jwt.sign (
                     {
                         id: newUser.id,
-                        username:  newUser.name
+                        name:  newUser.name
                     },
                     process.env.JWT_SECRET,
                     {
@@ -51,8 +51,49 @@ const verifyUser = (req, res) => {
     })
 }
 
+const login =(req, res) => {
+    User.findOne({
+        where: {
+            name: req.body.name
+        }
+    })
+    .then(foundUser => {
+        if(foundUser) {
+            bcrypt.compare(req.body.password, foundUser.password, (err,match) => {
+                if(match) {
+                    const token = jwt.sign (
+                        {
+                            name: foundUser.name,
+                            id: foundUser.id
+                        },
+                        process.env.JWT_SECRET,
+                        {
+                            expiresIn: "10 days"
+                        }
+                    )
+                    res.status(200).json({
+                        "token" : token,
+                        "user" : foundUser
+                    });
+                }
+                else 
+                {
+                  res.status(400).send('Error: Incorrect Username or Password'); 
+                }
+            })
+        }
+        else 
+        {
+            res.status(400).send('Error: Incorrect Username or Password'); 
+        }
+    })
+    .catch(err => {
+        res.status(500).send(`ERROR: ${err}`);
+    })
+}
+
 module.exports = {
     createUser,
     verifyUser,
-
+    login
 }
