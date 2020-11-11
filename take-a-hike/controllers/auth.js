@@ -20,20 +20,39 @@ const createUser = (req, res) => {
                 const token = jwt.sign (
                     {
                         id: newUser.id,
-                        username:  newUser.username
+                        username:  newUser.name
                     },
                     process.env.JWT_SECRET,
                     {
                         expiresIn: "10 days"
                     }
                 );
-                res.cookie("jwt", token);
-                // would this now send a response
+                res.status(200).json({
+                    "token" : token,
+                    "user" : newUser
+                })
+            })
+            .catch(err => {
+                res.status(400).send(`ERROR: ${err}`);
             })
         })
     })
 }
 
+const verifyUser = (req, res) => {
+    User.findByPk(req.user.id, {
+        attributes: ['id', 'name', 'updatedAt', 'email', 'password', 'location', 'bio']
+    })
+    .then(foundUser => {
+        res.status(200).json(foundUser);
+    })
+    .catch(err => {
+        res.status(400).send(`ERROR: ${err}`);
+    })
+}
+
 module.exports = {
-    createUser
+    createUser,
+    verifyUser,
+
 }
