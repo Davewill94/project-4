@@ -1,41 +1,29 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import axios from 'axios';
 
 import TrailDetails from './TrailDetails';
 
-class TrailShow extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            trailNum: 1,
-            trailData: null
-        }
-    }
-    getTrailData = () => {
-        let resp = null;
-        // 192.168.0.19
-        async function makeRequest(trail) {
-            resp = await axios.get(`http://localhost:3001/trails/${trail}`) 
-        }
-        makeRequest(this.state.trailNum);
-        console.log(resp)
-        // this.setState({
-        //     trailData: resp
-        // })
-    }
-    componentDidMount() {
-        this.getTrailData();
-        // console.log(this.state.trailData);
-    }
-    render() {
-        return (
-            <div className="trail-details">
-               {this.state.trailData != null &&  <TrailDetails trailData={this.state.trailData}/>}
-            </div>
-        )
-    }
+function TrailShow(props) {
+    return(
+        <div>
+            {props.userSavedTrails && props.userSavedTrails.map((trail, idx) => (
+                <div className="user-saved-trips">
+                    <Link to={`/trails/${trail.id}`} key={idx}>
+                        <h3>{trail.title}</h3>
+                        <img src={trail.image} alt={trail.title} />
+                        <p>{trail.description}</p>
+                    </Link>
+                    <button onClick={()=>
+                        props.deleteSavedTrail(props.currentUser.id, trail.id)}
+                    >
+                        Delete Account
+                    </button>
+                </div>
+            ))}
+        </div>
+    )
 }
+
 
 export default TrailShow;

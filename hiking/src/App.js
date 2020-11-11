@@ -7,7 +7,11 @@ import SignUp from './components/SignUp';
 import TrailShow from './components/TrailShow';
 import React, { Component } from 'react';
 
-import { createUser, loginUser, verifyUser, destroyProfile, putProfile} from './services/api_helper';
+import { createUser, loginUser, 
+          verifyUser, destroyProfile, 
+          putProfile, getSavedTrails,
+          destroySavedTrail
+        } from './services/api_helper';
 import ProfileContainer from './components/ProfileContainer';
 import ProfilePage from './components/ProfilePage';
 import UpdateProfilePage from './components/UpdateProfilePage';
@@ -18,6 +22,7 @@ class App extends Component {
 
     this.state = {
       currentUser: null,
+      userSavedTrails: null
     }
   }
 
@@ -26,6 +31,7 @@ class App extends Component {
     const currentUser = await loginUser(loginData);
     this.setState({currentUser});
     this.props.history.push(`/profile/${currentUser.id}`);
+    this.getUsersTrails();
   }
   
   handleRegister = async (e, registerData) => {
@@ -64,8 +70,26 @@ class App extends Component {
     this.props.history.push(`/profile/${updatedProfile.id}`)
   }
 
+  getUsersTrails = async () => {
+    if(this.state.currentUser) {
+      const userSavedTrails = await getSavedTrails(this.state.currentUser.id);
+      this.setState({ userSavedTrails: userSavedTrails.savedtrails })
+    }
+  }
+
+  deleteSavedTrail = async (userId, trailId) => {
+    await destroySavedTrail(userId,trailId);
+    const savedTrails = this.state.userSavedTrails;
+    const remainingSaved = savedTrails.filter(trail => trail.id !== parseInt(trailId));
+    this.setState({
+      userSavedTrails: remainingSaved
+    })
+    this.props.history.push(`/profile/${userId}`)
+  }
+
   componentDidMount() {
     this.handleVerify();
+    this.getUsersTrails();
   }
 
 
@@ -97,6 +121,11 @@ class App extends Component {
         <Route path="/profile/:id/edit" render={() => (
           <UpdateProfilePage currentUser={this.state.currentUser} updateProfile={this.updateProfile}/>
         )} />
+        {this.state.userSavedTrails && <TrailShow 
+          userSavedTrails={this.state.userSavedTrails} 
+          currentUser={this.state.currentUser}
+          deleteSavedTrail={this.deleteSavedTrail}
+        />}
       </div>
     );
   }

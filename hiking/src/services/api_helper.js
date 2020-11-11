@@ -42,5 +42,12 @@ export const putProfile = async (id, profileData) => {
     return resp.data;
 }
 
+export const getSavedTrails = async(id) => {
+    const resp = await api.get(`/profile/${id}`);
+    return resp.data;
+}
 
+export const destroySavedTrail = async(userId, trailId) => {
+     await api.delete(`/profile/${userId}/${trailId}`)
+}
 

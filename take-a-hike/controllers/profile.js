@@ -43,7 +43,44 @@ const deleteProfile =(req, res) => {
     })
 }
 
+const getSavedTrails = (req, res) => {
+    User.findByPk(req.user.id, {
+        attributes: ["id"],
+        include: [{
+            association: 'savedtrails',
+            model: Trails,
+            attributes: ["id", 'title', 'trail_id', 'type', 'image',
+            'difficulty', "description", 'rating', 'length', 'location',
+            'lat', 'lng']
+        }]
+    })
+    .then(userSavedTrails => {
+        res.status(200).json(userSavedTrails)
+    })
+    .catch(err => {
+        res.status(500).send(`ERROR: ${err}`)
+    })
+}
+
+const deleteSavedTrail = (req, res) => {
+    SavedTrails.destroy({
+        where: {
+            userId: req.params.userId,
+            trailId: req.params.trailId
+        }
+    })
+    .then(()=> {
+        res.status(200).send(`User saved trail Deleted`);
+    })
+    .catch(err => {
+        res.status(500).send(`ERROR: ${err}`)
+    })
+
+}
+
 module.exports = {
     editProfile,
-    deleteProfile
+    deleteProfile,
+    getSavedTrails,
+    deleteSavedTrail
 }
