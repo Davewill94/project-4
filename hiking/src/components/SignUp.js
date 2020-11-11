@@ -9,6 +9,7 @@ class SignUp extends Component {
             password: '',
             location: '',
             email: '',
+            img:'',
             bio: ''
         }
     }
@@ -29,6 +30,8 @@ class SignUp extends Component {
                 <input type="text" name="email" placeholder="Email Here" onChange={this.handleChange}/>
                 <label for='location'>From:</label>
                 <input type="text" name="location" placeholder="Where do you live" onChange={this.handleChange}/>
+                <lable for='img'>Bio Pic:</lable>
+                <input type="text" name="img" placeholder='Image url' onChange={this.handleChange}/>
                 <label for='bio'>Bio:</label>
                 <input type="text" name="bio" placeholder="Short bio here" onChange={this.handleChange}/>
                 <input type="submit" value="Create Account" />

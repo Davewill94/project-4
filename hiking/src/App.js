@@ -8,6 +8,9 @@ import TrailShow from './components/TrailShow';
 import React, { Component } from 'react';
 
 import { createUser, loginUser, verifyUser } from './services/api_helper';
+import ProfileContainer from './components/ProfileContainer';
+import ProfilePage from './components/ProfilePage';
+import UpdateProfilePage from './components/UpdateProfilePage';
 
 class App extends Component {
   constructor(props) {
@@ -22,21 +25,21 @@ class App extends Component {
     e.preventDefault();
     const currentUser = await loginUser(loginData);
     this.setState({currentUser});
-    //push to profile
+    this.props.history.push(`/profile/${currentUser.id}`);
   }
   
   handleRegister = async (e, registerData) => {
     e.preventDefault();
     const currentUser = await createUser(registerData);
     this.setState({currentUser});
-    //push to profile
+    this.props.history.push(`/profile/${currentUser.id}`);
   }
   
   handleVerify = async () => {
     const currentUser = await verifyUser();
     if (currentUser) {
       this.setState({ currentUser });
-      //push to profile
+      this.props.history.push(`/profile/${currentUser.id}`);
     }
   }
 
@@ -73,13 +76,12 @@ class App extends Component {
         <Route path="/register" render={() => (
           <SignUp handleRegister={this.handleRegister} />
         )} />
-        {/* <Route path="/signup" >
-          <SignUp />
-        </Route>
-        <Route path="/gettrail" >
-          <TrailShow />
-        </Route> */}
-
+        <Route exact path='/profile/:id' render={() => (
+          <ProfilePage currentUser={this.state.currentUser}/>
+        )} />
+        <Route path="/profile/:id/edit" render={() => (
+          <UpdateProfilePage currentUser={this.state.currentUser} />
+        )} />
       </div>
     );
   }

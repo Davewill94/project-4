@@ -41,7 +41,7 @@ const createUser = (req, res) => {
 
 const verifyUser = (req, res) => {
     User.findByPk(req.user.id, {
-        attributes: ['id', 'name', 'updatedAt', 'email', 'password', 'location', 'bio']
+        attributes: ['id', 'name', 'updatedAt', 'email', 'password', 'location', 'img', 'bio']
     })
     .then(foundUser => {
         res.status(200).json(foundUser);
