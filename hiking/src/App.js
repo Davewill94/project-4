@@ -7,7 +7,7 @@ import SignUp from './components/SignUp';
 import TrailShow from './components/TrailShow';
 import React, { Component } from 'react';
 
-import { registerUser, loginUser, verifyUser, allCities } from './services/api_helper';
+import { createUser, loginUser, verifyUser } from './services/api_helper';
 
 class App extends Component {
   constructor(props) {
@@ -25,12 +25,25 @@ class App extends Component {
     //push to profile
   }
   
+  handleRegister = async (e, registerData) => {
+    e.preventDefault();
+    const currentUser = await createUser(registerData);
+    this.setState({currentUser});
+    //push to profile
+  }
+  
   handleVerify = async () => {
     const currentUser = await verifyUser();
     if (currentUser) {
       this.setState({ currentUser });
       //push to profile
     }
+  }
+
+  handleLogout = () => {
+    localStorage.removeItem('authToken');
+    this.setState({currentUser: null});
+    this.props.history.push('/login');
   }
 
   componentDidMount() {
@@ -45,15 +58,27 @@ class App extends Component {
         <Route exact path='/'>
           <HomePage />
         </Route> 
-        <Route path="/login" >
-          <Login />
-        </Route>
-        <Route path="/signup" >
+        
+        {this.state.currentUser ? 
+          <div>
+            <p>Hello {this.state.currentUser.username}</p>
+            <button onClick={this.handleLogout}>Logout</button>
+          </div> :
+          <Link to='/login'><button>Login/Register</button></Link>
+        }
+
+        <Route path="/login" render={() => (
+          <Login handleLogin={this.handleLogin}/>
+        )} />
+        <Route path="/register" render={() => (
+          <SignUp handleRegister={this.handleRegister} />
+        )} />
+        {/* <Route path="/signup" >
           <SignUp />
         </Route>
         <Route path="/gettrail" >
           <TrailShow />
-        </Route>
+        </Route> */}
 
       </div>
     );

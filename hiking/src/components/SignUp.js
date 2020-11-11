@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 class SignUp extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            userName: '',
+            name: '',
             password: '',
-            from: ''
+            location: '',
+            email: '',
+            bio: ''
         }
     }
     handleChange = (e) => {
@@ -17,14 +20,19 @@ class SignUp extends Component {
 
     render() {
         return(
-            <form>
-                <label for='userName'>User Name:</label>
-                <input type='text' name='userName' placeholder="User Name" onChange={this.handleChange}/>
+            <form onSubmit={(e)=> this.props.handleRegister(e, this.state)}>
+                <label for='name'>User Name:</label>
+                <input type='text' name='name' placeholder="User Name" onChange={this.handleChange}/>
                 <label for='password'>Password:</label>
-                <input type="text" name="password" placeholder="Password Here" onChange={this.handleChange}/>
-                <label for='password'>From:</label>
-                <input type="text" name="from" placeholder="Where do you live" onChange={this.handleChange}/>
+                <input type="password" name="password" placeholder="Password Here" onChange={this.handleChange}/>
+                <label for='email'>Email:</label>
+                <input type="text" name="email" placeholder="Email Here" onChange={this.handleChange}/>
+                <label for='location'>From:</label>
+                <input type="text" name="location" placeholder="Where do you live" onChange={this.handleChange}/>
+                <label for='bio'>Bio:</label>
+                <input type="text" name="bio" placeholder="Short bio here" onChange={this.handleChange}/>
                 <input type="submit" value="Create Account" />
+                <Link to="/login">Login</Link>
             </form>
         )
     }
