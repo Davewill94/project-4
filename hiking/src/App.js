@@ -7,7 +7,7 @@ import SignUp from './components/SignUp';
 import TrailShow from './components/TrailShow';
 import React, { Component } from 'react';
 
-import { createUser, loginUser, verifyUser } from './services/api_helper';
+import { createUser, loginUser, verifyUser, destroyProfile, putProfile} from './services/api_helper';
 import ProfileContainer from './components/ProfileContainer';
 import ProfilePage from './components/ProfilePage';
 import UpdateProfilePage from './components/UpdateProfilePage';
@@ -49,6 +49,20 @@ class App extends Component {
     this.props.history.push('/login');
   }
 
+  deleteProfile = async (id) => {
+    await destroyProfile(id);
+    this.handleLogout();
+  }
+
+  updateProfile = async (e, id, profileData) => {
+    e.preventDefault();
+    const updatedProfile = await putProfile(id, profileData);
+    this.setState({ 
+      currentUser: updatedProfile
+    });
+    this.props.history.push(`/profile/${updatedProfile.id}`)
+  }
+
   componentDidMount() {
     this.handleVerify();
   }
@@ -77,10 +91,10 @@ class App extends Component {
           <SignUp handleRegister={this.handleRegister} />
         )} />
         <Route exact path='/profile/:id' render={() => (
-          <ProfilePage currentUser={this.state.currentUser}/>
+          <ProfilePage currentUser={this.state.currentUser} deleteProfile={this.deleteProfile}/>
         )} />
         <Route path="/profile/:id/edit" render={() => (
-          <UpdateProfilePage currentUser={this.state.currentUser} />
+          <UpdateProfilePage currentUser={this.state.currentUser} updateProfile={this.updateProfile}/>
         )} />
       </div>
     );

@@ -29,3 +29,18 @@ export const createUser = async (registerData) => {
     api.defaults.headers.common.authorization = `Bearer ${resp.data.token}`;
     return resp.data.user;
 }
+
+
+//====================== Profile ==========================
+
+export const destroyProfile = async (id) => {
+    await api.delete(`/profile/${id}`);
+}
+
+export const putProfile = async (id, profileData) => {
+    const resp = await api.put(`/profile/${id}`, profileData);
+    return resp.data;
+}
+
+
+
