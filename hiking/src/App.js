@@ -45,8 +45,9 @@ class App extends Component {
 
   handleLogout = () => {
     localStorage.removeItem('authToken');
-    this.setState({currentUser: null});
     this.props.history.push('/login');
+    this.setState({currentUser: null});
+
   }
 
   deleteProfile = async (id) => {
