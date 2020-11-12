@@ -9,6 +9,7 @@ import {bulkPostTrails, getTrail, postSavedTrails} from '../services/api_helper'
 import FindTrail from './FindTrail';
 import AllTrailsShow from './AllTrailsShow';
 import TrailDetails from './TrailDetails';
+import SavedTrailDetails from './SavedTrailDetails';
 import TrailShow from './TrailShow';
 
 require ('dotenv').config();
@@ -137,9 +138,17 @@ class TrailsContainer extends Component {
                     </>
                 )} />
                 
-                <Route path="/trails/:id" render={(props) => (
+                <Route path="/trails/:id/saved" render={(props) => (
+                    <SavedTrailDetails  trails={this.props.userSavedTrails} 
+                                        trailId={props.match.params.id}
+                                        flag={props.match.params.flag}
+                                        saveTrail={this.saveTrail}
+                    />
+                )} />
+                <Route path="/trails/:id/unsaved" render={(props) => (
                     <TrailDetails   trails={this.state.trails} 
                                     trailId={props.match.params.id}
+                                    flag={props.match.params.flag}
                                     saveTrail={this.saveTrail}
                     />
                 )} />

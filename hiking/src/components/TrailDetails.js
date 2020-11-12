@@ -1,8 +1,10 @@
 import React from 'react';
 
+import { getTrail } from '../services/api_helper';
+
 function TrailDetails(props) {
     const currentTrail = props.trails.find(trail => trail.id===parseInt(props.trailId))
-    // console.log(currentTrail)
+
     return (
         <div>
             <h3>{currentTrail.name}</h3>

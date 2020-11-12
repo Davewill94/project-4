@@ -138,7 +138,9 @@ class App extends Component {
           <UpdateProfilePage currentUser={this.state.currentUser} updateProfile={this.updateProfile}/>
         )} />
         <Route path="/trails" render={() => (
-          <TrailsContainer userId={this.state.currentUser.id} />
+          <TrailsContainer  userId={this.state.currentUser.id} 
+                            userSavedTrails={this.state.userSavedTrails}
+          />
         )} />
       </div>
     );
