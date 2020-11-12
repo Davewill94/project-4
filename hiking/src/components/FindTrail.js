@@ -26,9 +26,18 @@ class FindTrail extends Component {
     render() {
         return (
             <>
-                {this.state.location === '' ?  
-                <p>Fetching Your Current Locations</p>
-                
+                {this.state.location === '' ?
+                    <div>
+                        <p>Waiting for location</p>
+                        <form onSubmit={(e) => this.props.findAllTrails(e, this.state) }>
+                            <label for="locaton">Location: </label>
+                            <input type="text" name='location' value={this.state.location} onChange={this.handleChange} />
+                            <label for="range">Range(mi): </label>
+                            <input type="number" name='range' value={this.state.range} onChange={this.handleChange} />
+                            <input type="submit" value="Take a hike" />
+                        </form>
+                    </div>
+
                 :
                     <form onSubmit={(e) => this.props.findAllTrails(e, this.state) }>
                         <label for="locaton">Location: </label>
