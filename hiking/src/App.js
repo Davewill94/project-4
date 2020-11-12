@@ -100,16 +100,19 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header /> 
         <Route exact path='/'>
           <HomePage />
         </Route> 
         
-        {this.state.currentUser ? 
+        {this.state.currentUser ?
+        <> 
+          <Header currentUser={this.state.currentUser} getSaved={this.getUsersTrails}/> 
           <div>
             <p>Hello {this.state.currentUser.username}</p>
             <button onClick={this.handleLogout}>Logout</button>
-          </div> :
+          </div> 
+        </>
+          :
           <Link to='/login'><button>Login/Register</button></Link>
         }
 
@@ -135,7 +138,7 @@ class App extends Component {
           <UpdateProfilePage currentUser={this.state.currentUser} updateProfile={this.updateProfile}/>
         )} />
         <Route path="/trails" render={() => (
-          <TrailsContainer />
+          <TrailsContainer userId={this.state.currentUser.id} />
         )} />
       </div>
     );

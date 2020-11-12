@@ -7,8 +7,8 @@ function AllTrailsShow(props) {
     return(
         <div>
             {props.allTrails.map((trail, idx) => (
-                <div className="user-saved-trips">
-                    <Link to={`/trails/${trail.id}`} key={idx}>
+                <div className="user-saved-trips" key={idx}>
+                    <Link to={`/trails/${trail.id}`} >
                         <h3>{trail.name}</h3>
                         <img src={trail.imgMedium} alt="No trail Image Avaliable" />
                         <p>{trail.summary}</p>

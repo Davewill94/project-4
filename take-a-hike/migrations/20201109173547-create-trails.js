@@ -14,7 +14,8 @@ module.exports = {
       },
       trail_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       type: {
         type: Sequelize.STRING

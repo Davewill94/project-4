@@ -78,9 +78,23 @@ const deleteSavedTrail = (req, res) => {
 
 }
 
+const addSavedTrail = (req, res) => {
+    
+    SavedTrails.create(req.body)
+    .then(newSaved => {
+        res.status(200).send("Trail added!")
+    })
+    .catch(err => {
+        res.status(500).send(`ERROR: ${err}`)
+    })
+
+
+}
+
 module.exports = {
     editProfile,
     deleteProfile,
     getSavedTrails,
-    deleteSavedTrail
+    deleteSavedTrail,
+    addSavedTrail
 }

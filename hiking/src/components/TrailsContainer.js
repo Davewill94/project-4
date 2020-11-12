@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 
 import { Link, Route } from 'react-router-dom';
 import axios from 'axios';
-import {bulkPostTrails} from '../services/api_helper';
+import {bulkPostTrails, getTrail, postSavedTrails} from '../services/api_helper';
 
 
 import FindTrail from './FindTrail';
 import AllTrailsShow from './AllTrailsShow';
+import TrailDetails from './TrailDetails';
+import TrailShow from './TrailShow';
 
 require ('dotenv').config();
 
@@ -105,6 +107,19 @@ class TrailsContainer extends Component {
 
 
     }
+
+    saveTrail = async (trailId) => {
+        // console.log(trailId)
+        const foundTrail = await getTrail(trailId);
+        // console.log(foundTrail)
+        const savedTrailData = {
+            userId: this.props.userId,
+            trailId: foundTrail.id
+        }
+
+        await postSavedTrails(savedTrailData);
+    }
+
     componentDidMount() {
         this.getLocation();
     }
@@ -112,11 +127,22 @@ class TrailsContainer extends Component {
     render() {
         return(
             <div>
-                <h3>Find Some Trails</h3>
-                <FindTrail details={this.state.location} findAllTrails={this.findAllTrails} />
-                {this.state.trails.length !=0 && 
-                    <AllTrailsShow allTrails={this.state.trails}/>
-                }
+                <Route exact path="/trails" render={() => ( 
+                    <>
+                    <h3>Find Some Trails</h3>
+                    <FindTrail details={this.state.location} findAllTrails={this.findAllTrails} />
+                    {this.state.trails.length !=0 && 
+                        <AllTrailsShow allTrails={this.state.trails}/>
+                    }
+                    </>
+                )} />
+                
+                <Route path="/trails/:id" render={(props) => (
+                    <TrailDetails   trails={this.state.trails} 
+                                    trailId={props.match.params.id}
+                                    saveTrail={this.saveTrail}
+                    />
+                )} />
             </div>
         )
     }
