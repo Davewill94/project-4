@@ -42,7 +42,24 @@ const GetTrail = (req, res) => {
     })
 }
 
+const bulkTrailPost = (req, res) => {
+    // console.log(req.body)
+    // async (queryInterface, Sequelize) => {
+    //     await queryInterface.bulkInsert('trails', req.body, {});
+    //   }
+    req.body.forEach((trail) => {
+        Trail.create(trail)
+        .then(()=> {
+            res.status(200).send("Trail Created");
+        })
+        .catch(err => {
+            res.status(400).send(`ERROR: ${err}`);
+        })
+    })
+}
+
 module.exports = {
     GetTrails,
-    GetTrail
+    GetTrail,
+    bulkTrailPost
 }

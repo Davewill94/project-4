@@ -36,9 +36,9 @@ const verifyToken = (req, res, next) => {
 app.use('/auth', routes.auth);
 app.use('/auth/verify', verifyToken, routes.auth);
 app.use('/profile', verifyToken, routes.profile);
+app.use('/trails', verifyToken, routes.trail);
 
 
-app.use('/trails', routes.trail);
 app.use('/reviews', routes.review);
 
 

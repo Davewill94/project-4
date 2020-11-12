@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 import { Link, Route } from 'react-router-dom';
 import axios from 'axios';
+import {bulkPostTrails} from '../services/api_helper';
+
 
 import FindTrail from './FindTrail';
 import AllTrailsShow from './AllTrailsShow';
@@ -79,6 +81,24 @@ class TrailsContainer extends Component {
                 `https://www.hikingproject.com/data/get-trails?lat=${newLat}&lon=${newLng}&maxDistance=${newLocation.range}&key=200969679-32371fdf01a17cc4109f3f3b343a8185`
             )
         }
+        let bulkTrails =[];
+        response.data.trails.forEach(element => {
+            let trail = {
+                title: element.name,
+                trail_id: element.id,
+                type: element.type,
+                image: element.imgMedium,
+                difficulty: element.difficulty,
+                description: element.summary,
+                rating: element.stars,
+                length: element.length,
+                location: element.location,
+                lat: element.latitude,
+                lng: element.longitude
+            }
+            bulkTrails.push(trail)
+        });
+        bulkPostTrails(bulkTrails);
         this.setState({
             trails: response.data.trails
         })

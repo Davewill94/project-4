@@ -51,3 +51,12 @@ export const destroySavedTrail = async(userId, trailId) => {
      await api.delete(`/profile/${userId}/${trailId}`)
 }
 
+//====================== Trails ==========================
+
+export const bulkPostTrails = async (trails) => {
+    console.log(trails)
+    await api.post(`/trails/bulk`, trails)
+}
+
+
+
