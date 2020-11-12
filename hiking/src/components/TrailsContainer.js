@@ -131,7 +131,9 @@ class TrailsContainer extends Component {
                 <Route exact path="/trails" render={() => ( 
                     <>
                     <h3>Find Some Trails</h3>
-                    <FindTrail details={this.state.location} findAllTrails={this.findAllTrails} />
+                    {this.state.location !='' && 
+                        <FindTrail details={this.state.location} findAllTrails={this.findAllTrails} />
+                    }
                     {this.state.trails.length !=0 && 
                         <AllTrailsShow allTrails={this.state.trails}/>
                     }

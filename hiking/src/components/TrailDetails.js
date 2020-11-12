@@ -6,7 +6,7 @@ function TrailDetails(props) {
     const currentTrail = props.trails.find(trail => trail.id===parseInt(props.trailId))
 
     return (
-        <div>
+        <div className="trip-detials">
             <h3>{currentTrail.name}</h3>
             <img src={currentTrail.imgMedium} alt="Sorry no image" />
             <p>{currentTrail.summary}</p>

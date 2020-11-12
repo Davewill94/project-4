@@ -16,31 +16,29 @@ class FindTrail extends Component {
         })
     }
 
-    // set_state = () => {
-    //     console.log("made to set state function")
-    //     setTimeout(() => {
-    //         console.log("settimeout")
-    //         this.setState({
-    //             location: this.props.details
-    //         })
-    //     }, 1)
 
-        
-    // }
-
-    // componentDidMount () {
-    //     this.set_state();
-    // }
+    componentDidMount () {
+        this.setState({
+            location: this.props.details
+        });
+    }
 
     render() {
         return (
-            <form onSubmit={(e) => this.props.findAllTrails(e, this.state) }>
-                <label for="locaton">Location: </label>
-                <input type="text" name='location' value={this.state.location} onChange={this.handleChange} />
-                <label for="range">Range(mi): </label>
-                <input type="number" name='range' value={this.state.range} onChange={this.handleChange} />
-                <input type="submit" value="Take a hike" />
-            </form>
+            <>
+                {this.state.location === '' ?  
+                <p>Fetching Your Current Locations</p>
+                
+                :
+                    <form onSubmit={(e) => this.props.findAllTrails(e, this.state) }>
+                        <label for="locaton">Location: </label>
+                        <input type="text" name='location' value={this.state.location} onChange={this.handleChange} />
+                        <label for="range">Range(mi): </label>
+                        <input type="number" name='range' value={this.state.range} onChange={this.handleChange} />
+                        <input type="submit" value="Take a hike" />
+                    </form>
+                }
+            </>
         )
     }
 
