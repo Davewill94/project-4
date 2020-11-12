@@ -6,6 +6,7 @@ const Header = () => {
         <div id="header">
             <nav>
                 <Link to='/'>Home</Link>
+                <Link to='/trails'>Find Trails</Link>
             </nav>
         </div>
     )

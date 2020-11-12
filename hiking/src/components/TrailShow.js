@@ -17,7 +17,7 @@ function TrailShow(props) {
                     <button onClick={()=>
                         props.deleteSavedTrail(props.currentUser.id, trail.id)}
                     >
-                        Delete Account
+                        Remove Saved Trail
                     </button>
                 </div>
             ))}

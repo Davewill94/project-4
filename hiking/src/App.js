@@ -15,6 +15,7 @@ import { createUser, loginUser,
 import ProfileContainer from './components/ProfileContainer';
 import ProfilePage from './components/ProfilePage';
 import UpdateProfilePage from './components/UpdateProfilePage';
+import TrailsContainer from './components/TrailsContainer';
 
 class App extends Component {
   constructor(props) {
@@ -52,7 +53,10 @@ class App extends Component {
   handleLogout = () => {
     localStorage.removeItem('authToken');
     this.props.history.push('/login');
-    this.setState({currentUser: null});
+    this.setState({
+      currentUser: null,
+      userSavedTrails: null
+    });
 
   }
 
@@ -118,14 +122,21 @@ class App extends Component {
         <Route exact path='/profile/:id' render={() => (
           <ProfilePage currentUser={this.state.currentUser} deleteProfile={this.deleteProfile}/>
         )} />
+        {this.state.userSavedTrails && 
+          <Route exact path='/profile/:id' render={() => (
+            <TrailShow 
+              userSavedTrails={this.state.userSavedTrails} 
+              currentUser={this.state.currentUser}
+              deleteSavedTrail={this.deleteSavedTrail}
+            />
+          )} />
+        }
         <Route path="/profile/:id/edit" render={() => (
           <UpdateProfilePage currentUser={this.state.currentUser} updateProfile={this.updateProfile}/>
         )} />
-        {this.state.userSavedTrails && <TrailShow 
-          userSavedTrails={this.state.userSavedTrails} 
-          currentUser={this.state.currentUser}
-          deleteSavedTrail={this.deleteSavedTrail}
-        />}
+        <Route path="/trails" render={() => (
+          <TrailsContainer />
+        )} />
       </div>
     );
   }
